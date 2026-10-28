@@ -178,9 +178,6 @@ Severity is **Medium** (z ≥ 3), **High** (z ≥ 5) or **Critical** (z ≥ 8). 
 - City-level IP markers, light theme, mobile layout and PDF/CSV export
 - 3D globe view and Docker deployment with HTTPS
 
-## Documentation
-
-A full project report (architecture, design, results and limitations) is available in [`docs/CyberPulse-Report.pdf`](docs/CyberPulse-Report.pdf).
 
 ## Acknowledgements
 
