@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CyberPulse | Live Cyber Threat Map</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="scanlines"></div>
+
+<div id="app">
+  <!-- ============ MAP AREA ============ -->
+  <main id="stage">
+    <header id="topbar">
+      <div class="brand">
+        <div class="logo"><span></span><span></span><span></span></div>
+        <div>
+          <h1>CYBER<b>PULSE</b></h1>
+          <p>Live Cyber Threat Map</p>
+        </div>
+      </div>
+      <div class="top-actions">
+        <span id="srcPill" class="pill off">CONNECTING…</span>
+        <span id="clock" class="pill mono">--:--:--</span>
+        <button id="btnSpike" class="btn warn" title="Demo: send a fake spike to show how the anomaly detector works">⚡ SIMULATE SPIKE</button>
+        <button id="btnSound" class="btn" title="Alert sound on/off">🔔</button>
+        <button id="btnPause" class="btn">❚❚ PAUSE</button>
+        <button id="btnFull" class="btn">⛶ FULLSCREEN</button>
+      </div>
+    </header>
+
+    <div id="mapWrap">
+      <svg id="map"></svg>
+      <div id="tooltip"></div>
+    </div>
+
+    <!-- Spike banner -->
+    <div id="alertBanner" hidden></div>
+
+    <!-- Attack type filter -->
+    <section class="panel float" id="types">
+      <h3>ATTACK TYPES</h3>
+      <ul id="typeList"></ul>
+    </section>
+
+    <!-- Big counters -->
+    <section class="float" id="counters">
+      <div class="counter"><span id="cTotal">0</span><label>ATTACKS (WINDOW)</label></div>
+      <div class="counter"><span id="cRate">0</span><label>ATTACKS / SEC</label></div>
+      <div class="counter"><span id="cSev" class="OFFLINE">OFFLINE</span><label>ANOMALY STATUS</label></div>
+    </section>
+
+    <!-- Anomaly log (top-right) -->
+    <section class="panel float" id="alertPanel">
+      <h3>ANOMALY ALERTS <i class="dot red"></i></h3>
+      <ul id="alertList"><li class="empty">No anomalies detected yet</li></ul>
+    </section>
+
+    <!-- Country detail (click on a country) -->
+    <section class="panel float" id="cpanel" hidden>
+      <h3><span id="cpTitle"></span><button id="cpClose" aria-label="Close">✕</button></h3>
+      <div id="cpBody"></div>
+    </section>
+
+    <!-- Live feed -->
+    <section class="panel float" id="feedPanel">
+      <h3>LIVE ATTACK FEED <i class="dot"></i></h3>
+      <div class="feedhead"><span>TIME</span><span>SOURCE</span><span>TARGET</span><span>TYPE</span><span>DETAIL</span></div>
+      <div id="feed"></div>
+    </section>
+
+    <!-- Timeline -->
+    <section class="panel" id="timeline">
+      <canvas id="tl"></canvas>
+      <ul id="tlLegend"></ul>
+    </section>
+  </main>
+
+  <!-- ============ SIDEBAR ============ -->
+  <aside id="side">
+    <h2>LIVE CYBER THREAT MAP</h2>
+    <label class="sel">STATISTICS INTERVAL
+      <select id="interval">
+        <option value="60000">1 minute</option>
+        <option value="300000" selected>5 minutes</option>
+        <option value="900000">15 minutes</option>
+      </select>
+    </label>
+
+    <div class="block"><h3>TOP ATTACKERS</h3><ul class="bars" id="lAttackers"></ul></div>
+    <div class="block"><h3>TOP ATTACKED</h3><ul class="bars" id="lTargets"></ul></div>
+
+    <div class="block" id="intelBlock">
+      <h3>THREAT INTEL · ABUSEIPDB</h3>
+      <form id="ipForm" autocomplete="off">
+        <input id="ipInput" type="text" placeholder="IP check: e.g. 8.8.8.8" spellcheck="false" maxlength="45">
+        <button class="btn" type="submit">CHECK</button>
+      </form>
+      <div id="ipResult"></div>
+      <h4>TOP MALICIOUS IPS (≥90% confidence)</h4>
+      <ul id="ipTop" class="iplist"><li class="empty">Loading…</li></ul>
+    </div>
+
+    <div class="block"><h3>TOP NETWORK ATTACK VECTORS</h3><ul class="bars yellow" id="lVectors"></ul></div>
+    <div class="block"><h3>TOP APPLICATION VIOLATIONS</h3><ul class="bars red" id="lViol"></ul></div>
+    <div class="block"><h3>TOP SCANNED UDP PORTS</h3><div class="tiles" id="tUdp"></div></div>
+    <div class="block"><h3>TOP SCANNED TCP PORTS</h3><div class="tiles" id="tTcp"></div></div>
+    <p class="foot">Data: <span id="srcText">connecting…</span><br>Vectors / violations / ports = estimated · Educational project</p>
+  </aside>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
+<script src="countries.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
