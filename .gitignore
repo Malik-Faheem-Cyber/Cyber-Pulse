@@ -147,3 +147,8 @@ vite.config.ts.timestamp-*
 
 # Turbo Repo
 .turbo
+
+# Cyber-Pulse generated files
+history.json
+intel-cache.json
+radar-cache.json
